@@ -17,19 +17,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat '"%WORKSPACE%\\mvnw.cmd" clean install'
+                bat "\"%WORKSPACE%\\mvnw.cmd\" clean install"
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvnw.cmd test'
+                bat "\"%WORKSPACE%\\mvnw.cmd\" test"
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvnw.cmd package'
+                bat "\"%WORKSPACE%\\mvnw.cmd\" package"
             }
         }
     }
