@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvnw.cmd clean install'
+                bat '"%WORKSPACE%\\mvnw.cmd" clean install'
             }
         }
 
