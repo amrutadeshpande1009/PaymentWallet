@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven' // Matches the name in your Jenkins config
+        maven 'Maven' // Matches your Jenkins config
     }
 
     stages {
@@ -21,19 +21,28 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean install'
+                bat '''
+                    cd paymentWallet
+                    mvn clean install
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                bat '''
+                    cd paymentWallet
+                    mvn test
+                '''
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvn package'
+                bat '''
+                    cd paymentWallet
+                    mvn package
+                '''
             }
         }
     }
