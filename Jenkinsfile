@@ -2,7 +2,11 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven' // Matches your Jenkins config
+        maven 'Maven'
+    }
+
+    environment {
+        SONARQUBE_ENV = 'MySonarQubeServer' // Matches Jenkins config
     }
 
     stages {
@@ -28,28 +32,21 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('SonarQube Analysis') {
             steps {
-                bat '''
-                    cd paymentWallet
-                    mvn test
-                '''
-            }
-        }
-
-        stage('Package') {
-            steps {
-                bat '''
-                    cd paymentWallet
-                    mvn package
-                '''
+                withSonarQubeEnv(SONARQUBE_ENV) {
+                    bat '''
+                        cd paymentWallet
+                        mvn sonar:sonar
+                    '''
+                }
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build completed successfully!'
+            echo '✅ Build and SonarQube analysis completed successfully!'
         }
         failure {
             echo '❌ Build failed.'
