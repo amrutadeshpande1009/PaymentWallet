@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven' // Matches the name in your Jenkins config
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -17,29 +21,29 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "\"%WORKSPACE%\\mvnw.cmd\" clean install"
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                bat "\"%WORKSPACE%\\mvnw.cmd\" test"
+                bat 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                bat "\"%WORKSPACE%\\mvnw.cmd\" package"
+                bat 'mvn package'
             }
         }
     }
 
     post {
         success {
-            echo 'Build completed successfully!'
+            echo '✅ Build completed successfully!'
         }
         failure {
-            echo 'Build failed.'
+            echo '❌ Build failed.'
         }
     }
 }
