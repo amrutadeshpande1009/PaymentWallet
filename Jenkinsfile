@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scmGit(
-                    branches: [[name: '*/main']], // or '*/master'
+                    branches: [[name: '*/main']],
                     extensions: [],
                     userRemoteConfigs: [[
                         url: 'https://github.com/amrutadeshpande1009/PaymentWallet.git',
@@ -17,19 +17,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat './mvnw clean install'
+                bat 'mvnw.cmd clean install'
             }
         }
 
         stage('Test') {
             steps {
-                bat './mvnw test'
+                bat 'mvnw.cmd test'
             }
         }
 
         stage('Package') {
             steps {
-                bat './mvnw package'
+                bat 'mvnw.cmd package'
             }
         }
     }
